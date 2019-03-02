@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BC86CA7222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BC86CA3222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_1x.png */; };
+		0BC86CA8222A47BA00E9DB26 /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 0BC86CA4222A47BA00E9DB26 /* Contents.json */; };
+		0BC86CA9222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BC86CA5222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_3x.png */; };
+		0BC86CAA222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BC86CA6222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_2x.png */; };
+		0BC86CAD222A48FD00E9DB26 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC86CAC222A48FD00E9DB26 /* AddViewController.swift */; };
+		0BC86CAF222ACACD00E9DB26 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC86CAE222ACACD00E9DB26 /* CameraViewController.swift */; };
 		0BF917362223E67000731152 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF917352223E67000731152 /* AppDelegate.swift */; };
 		0BF917382223E67000731152 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF917372223E67000731152 /* ViewController.swift */; };
 		0BF9173B2223E67000731152 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BF917392223E67000731152 /* Main.storyboard */; };
@@ -40,6 +46,12 @@
 /* Begin PBXFileReference section */
 		048FE471D474FA4EE4D99117 /* Pods-RamenApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RamenApp.release.xcconfig"; path = "Target Support Files/Pods-RamenApp/Pods-RamenApp.release.xcconfig"; sourceTree = "<group>"; };
 		050A7934666C8FBC75472F15 /* Pods_RamenAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RamenAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BC86CA3222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baseline_camera_enhance_black_48pt_1x.png; sourceTree = "<group>"; };
+		0BC86CA4222A47BA00E9DB26 /* Contents.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
+		0BC86CA5222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baseline_camera_enhance_black_48pt_3x.png; sourceTree = "<group>"; };
+		0BC86CA6222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baseline_camera_enhance_black_48pt_2x.png; sourceTree = "<group>"; };
+		0BC86CAC222A48FD00E9DB26 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		0BC86CAE222ACACD00E9DB26 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		0BF917322223E67000731152 /* RamenApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RamenApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BF917352223E67000731152 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BF917372223E67000731152 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +116,17 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		0BC86CA2222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt.imageset */ = {
+			isa = PBXGroup;
+			children = (
+				0BC86CA3222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_1x.png */,
+				0BC86CA4222A47BA00E9DB26 /* Contents.json */,
+				0BC86CA6222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_2x.png */,
+				0BC86CA5222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_3x.png */,
+			);
+			path = baseline_camera_enhance_black_48pt.imageset;
+			sourceTree = "<group>";
+		};
 		0BF917292223E67000731152 = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +152,7 @@
 		0BF917342223E67000731152 /* RamenApp */ = {
 			isa = PBXGroup;
 			children = (
+				0BC86CA2222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt.imageset */,
 				0BF917352223E67000731152 /* AppDelegate.swift */,
 				0BF917372223E67000731152 /* ViewController.swift */,
 				0BF917392223E67000731152 /* Main.storyboard */,
@@ -136,6 +160,8 @@
 				0BF9173E2223E67100731152 /* LaunchScreen.storyboard */,
 				0BF917412223E67100731152 /* Info.plist */,
 				0BF917632223EBEC00731152 /* GoogleService-Info.plist */,
+				0BC86CAC222A48FD00E9DB26 /* AddViewController.swift */,
+				0BC86CAE222ACACD00E9DB26 /* CameraViewController.swift */,
 			);
 			path = RamenApp;
 			sourceTree = "<group>";
@@ -277,9 +303,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0BF917402223E67100731152 /* LaunchScreen.storyboard in Resources */,
+				0BC86CA7222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_1x.png in Resources */,
+				0BC86CA9222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_3x.png in Resources */,
 				0BF917642223EBEC00731152 /* GoogleService-Info.plist in Resources */,
+				0BC86CAA222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_2x.png in Resources */,
 				0BF9173D2223E67100731152 /* Assets.xcassets in Resources */,
 				0BF9173B2223E67000731152 /* Main.storyboard in Resources */,
+				0BC86CA8222A47BA00E9DB26 /* Contents.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,7 +440,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0BF917382223E67000731152 /* ViewController.swift in Sources */,
+				0BC86CAF222ACACD00E9DB26 /* CameraViewController.swift in Sources */,
 				0BF917362223E67000731152 /* AppDelegate.swift in Sources */,
+				0BC86CAD222A48FD00E9DB26 /* AddViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
