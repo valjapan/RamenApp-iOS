@@ -1,0 +1,6 @@
+framework module Pods_RamenAppUITests {
+  umbrella header "Pods-RamenAppUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
