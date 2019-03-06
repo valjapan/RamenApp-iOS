@@ -9,29 +9,74 @@
 import UIKit
 import Firebase
 
-class ViewController: UIViewController {
-    
-    @IBOutlet var table:UITableView!
-    
-    // section毎の画像配列
-    let imgArray: NSArray = [
-        "img0","img1",
-        "img2","img3",
-        "img4","img5",
-        "img6","img7"]
-    
-    let label2Array: NSArray = [
-        "8/23/16:04","8/23/16:15",
-        "8/23/16:47","8/23/17:10",
-        "8/23/1715:","8/23/17:21",
-        "8/23/17:33","8/23/17:41"]
-    
-    var imageNameArray = [String]()
-    
+class ViewController: UIViewController, UITableViewDataSource {
+
+    var db: Firestore!
+
+    var cellCount: Int!
+
+    var cell: UITableViewCell!
+
+    @IBOutlet var table: UITableView!
+
+    var ramenArray: [Ramen] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+
+//        table.dataSource = self
+
+
+        let settings = FirestoreSettings()
+
+        Firestore.firestore().settings = settings
+
+        db = Firestore.firestore()
+
+        getCollection()
+
     }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return ramenArray.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ListTableViewCell
+        let nowIndexPathDictionary = ramenArray[indexPath.row]
+
+        cell.titleLabel.text = nowIndexPathDictionary.title
+        cell.detailLabel.text = nowIndexPathDictionary.detail
+
+        return cell
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getCollection()
+    }
+
+    private func getCollection() {
+        db.collection("collection").getDocuments(){
+            (querySnapshot, err) in
+            
+            if let err = err {
+                print("Error getting documents: \(err)");
+            } else {
+                for document in querySnapshot!.documents {
+                    //                        self.cellCount += 1
+                    print("\(document.documentID) => \(document.data())");
+                    
+                    self.ramenArray.append(Ramen.init(tiele: document.data()["title"] as! String, detail: document.data()["detail"] as! String))
+                    
+                }
+                //                    print("Count = \(String(self.cellCount))");
+            }
+            self.table.reloadData()
+            
+        }
+
+    }
+
 }
 
