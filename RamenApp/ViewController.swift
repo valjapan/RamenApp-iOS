@@ -34,7 +34,12 @@ class ViewController: UIViewController, UITableViewDataSource {
         db = Firestore.firestore()
 
         getCollection()
-
+        
+        DispatchQueue.main.async{
+            self.getCollection()
+            self.table.reloadData()
+        }
+        
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -72,7 +77,7 @@ class ViewController: UIViewController, UITableViewDataSource {
                 }
                 //                    print("Count = \(String(self.cellCount))");
             }
-            self.table.reloadData()
+            
             
         }
 
