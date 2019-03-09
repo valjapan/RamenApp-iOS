@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ViewController: UIViewController, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var db: Firestore!
 
@@ -24,8 +24,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        table.dataSource = self
-
+        table.dataSource = self
 
         let settings = FirestoreSettings()
 
@@ -47,15 +46,13 @@ class ViewController: UIViewController, UITableViewDataSource {
 
         cell.titleLabel.text = nowIndexPathDictionary.title
         cell.detailLabel.text = nowIndexPathDictionary.detail
-        
-        
+
         return cell
 
     }
 
     override func viewWillAppear(_ animated: Bool) {
         getCollection()
-        
     }
 
     private func getCollection() {
@@ -75,7 +72,7 @@ class ViewController: UIViewController, UITableViewDataSource {
                 }
                 //                    print("Count = \(String(self.cellCount))");
             }
-            
+
             DispatchQueue.main.async {
                 self.table.reloadData()
             }

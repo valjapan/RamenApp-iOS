@@ -9,17 +9,15 @@
 import UIKit
 import Firebase
 
-class AddViewController: UIViewController {
+class AddViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     var db: Firestore!
 //    var storageRef: StorageReference!
 
-    @IBOutlet var image: UIImageView!
+    @IBOutlet var imageView: UIImageView!
     @IBOutlet var titleEditText: UITextField!
     @IBOutlet var detailEditText: UITextView!
     @IBOutlet var add: UIBarButtonItem!
     @IBOutlet var cancel: UIBarButtonItem!
-
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +72,57 @@ class AddViewController: UIViewController {
 
         self.dismiss(animated: true, completion: nil)
 
+    }
+    
+    // カメラロールから写真を選択する処理
+    @IBAction func choosePicture() {
+        // カメラロールが利用可能か？
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            // 写真を選ぶビュー
+            let pickerView = UIImagePickerController()
+            // 写真の選択元をカメラロールにする
+            // 「.camera」にすればカメラを起動できる
+            pickerView.sourceType = .photoLibrary
+            // デリゲート
+            pickerView.delegate = self
+            // ビューに表示
+            self.present(pickerView, animated: true)
+        }
+    }
+    
+    @IBAction func photo(_ sender: Any) {
+        
+        // 1
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
+        
+        // 2
+        let cameraRollAction = UIAlertAction(title: "カメラロールから選択", style: .default)
+        let takeCameraAction = UIAlertAction(title: "写真を撮る", style: .default)
+        
+        // 3
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel)
+        
+        // 4
+        optionMenu.addAction(cameraRollAction)
+        optionMenu.addAction(takeCameraAction)
+        optionMenu.addAction(cancelAction)
+        
+        // 5
+        self.present(optionMenu, animated: true, completion: nil)
+        
+    }
+//    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        // 選択した写真を取得する
+//        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+//        // ビューに表示する
+//        self.imageView.image = image
+//        // 写真を選ぶビューを引っ込める
+//        self.dismiss(animated: true)
+//    }
+    
+    // 写真をリセットする処理
+    @IBAction func resetPicture() {
+        
     }
     
     @IBAction func cancel(_ sender: Any) {

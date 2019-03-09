@@ -31,16 +31,16 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zjv-bp-lcB">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Zjv-bp-lcB">
                                 <rect key="frame" x="16" y="64" width="343" height="603"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="100" id="Z8z-9g-DJq" customClass="ListTableViewCell" customModule="RamenApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="343" height="100"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="238" id="Z8z-9g-DJq" customClass="ListTableViewCell" customModule="RamenApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="343" height="238"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Z8z-9g-DJq" id="L8R-SR-zjg">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="237.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWj-of-2Yo" userLabel="TextLabel">
@@ -50,8 +50,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kRo-gB-Kyq" userLabel="DetailLabel">
-                                                    <rect key="frame" x="108" y="55" width="220" height="28"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kRo-gB-Kyq" userLabel="DetailLabel">
+                                                    <rect key="frame" x="108" y="55" width="220" height="41"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -107,11 +107,18 @@
                                                 <action selector="cancel:" destination="WhM-7o-wWc" id="VoF-1n-RLP"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="MbI-Wp-Xie">
-                                            <connections>
-                                                <action selector="addPhoto:" destination="WhM-7o-wWc" id="wAM-cf-R7b"/>
-                                            </connections>
-                                        </barButtonItem>
+                                        <rightBarButtonItems>
+                                            <barButtonItem systemItem="add" id="MbI-Wp-Xie">
+                                                <connections>
+                                                    <action selector="addPhoto:" destination="WhM-7o-wWc" id="wAM-cf-R7b"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem systemItem="camera" id="BvN-3U-qwZ">
+                                                <connections>
+                                                    <action selector="photo:" destination="WhM-7o-wWc" id="cJF-a9-051"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </rightBarButtonItems>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -123,22 +130,12 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="内容をここに入力" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="QbJ-qS-CTx">
-                                <rect key="frame" x="67" y="410" width="240" height="133"/>
+                                <rect key="frame" x="67" y="410" width="240" height="237"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hw7-ua-HDV">
-                                <rect key="frame" x="138" y="551" width="98" height="82"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.53950203910000005" green="0.93158000100000005" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal" title="AddPhoto"/>
-                                <connections>
-                                    <action selector="addPhoto:" destination="WhM-7o-wWc" eventType="touchUpInside" id="FYg-GC-JDl"/>
-                                    <segue destination="Amp-fI-hWZ" kind="show" id="Inu-7z-4gN"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="gng-yi-5gL"/>
@@ -147,7 +144,7 @@
                         <outlet property="add" destination="MbI-Wp-Xie" id="0Jf-Sd-A3w"/>
                         <outlet property="cancel" destination="dwL-2C-iNg" id="CCq-f1-DlW"/>
                         <outlet property="detailEditText" destination="QbJ-qS-CTx" id="JNz-IX-BML"/>
-                        <outlet property="image" destination="Jmv-16-9bG" id="5zY-Pb-2ps"/>
+                        <outlet property="imageView" destination="Jmv-16-9bG" id="cg9-4o-6hs"/>
                         <outlet property="titleEditText" destination="NfV-CJ-PlT" id="rMw-Dd-KHa"/>
                     </connections>
                 </viewController>
