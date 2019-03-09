@@ -102,7 +102,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Create" id="57c-gj-Ne9">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="dwL-2C-iNg"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="dwL-2C-iNg">
+                                            <connections>
+                                                <action selector="cancel:" destination="WhM-7o-wWc" id="VoF-1n-RLP"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="MbI-Wp-Xie">
                                             <connections>
                                                 <action selector="addPhoto:" destination="WhM-7o-wWc" id="wAM-cf-R7b"/>

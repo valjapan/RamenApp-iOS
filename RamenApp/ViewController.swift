@@ -34,12 +34,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         db = Firestore.firestore()
 
         getCollection()
-        
-        DispatchQueue.main.async{
-            self.getCollection()
-            self.table.reloadData()
-        }
-        
+
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -52,33 +47,39 @@ class ViewController: UIViewController, UITableViewDataSource {
 
         cell.titleLabel.text = nowIndexPathDictionary.title
         cell.detailLabel.text = nowIndexPathDictionary.detail
-
+        
+        
         return cell
 
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         getCollection()
+        
     }
 
     private func getCollection() {
-        db.collection("collection").getDocuments(){
+        db.collection("collection").getDocuments() {
             (querySnapshot, err) in
-            
+
             if let err = err {
                 print("Error getting documents: \(err)");
             } else {
                 for document in querySnapshot!.documents {
                     //                        self.cellCount += 1
                     print("\(document.documentID) => \(document.data())");
-                    
+
                     self.ramenArray.append(Ramen.init(tiele: document.data()["title"] as! String, detail: document.data()["detail"] as! String))
-                    
+
+
                 }
                 //                    print("Count = \(String(self.cellCount))");
             }
             
-            
+            DispatchQueue.main.async {
+                self.table.reloadData()
+            }
+
         }
 
     }
