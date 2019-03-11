@@ -9,8 +9,12 @@
 import UIKit
 import Firebase
 
-class AddViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var db: Firestore!
+    var storage: Storage!
+    var image: UIImage!
+    var imageUrl: URL!
+
 //    var storageRef: StorageReference!
 
     @IBOutlet var imageView: UIImageView!
@@ -29,6 +33,7 @@ class AddViewController: UIViewController,UIImagePickerControllerDelegate,UINavi
         // [END setup]
         db = Firestore.firestore()
 
+//        storage = Storage.storage()
 
 
 //       storageRef = Storage.storage().reference()
@@ -40,20 +45,40 @@ class AddViewController: UIViewController,UIImagePickerControllerDelegate,UINavi
         //Cancel
         return true
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    
+    @IBAction func photo(_ sender: Any) {
+        
+        // 1
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
+        
+        // 2
+        let cameraRollAction = UIAlertAction(title: "カメラロールから選択", style: .default, handler: {
+            (action: UIAlertAction!)in
+            self.choosePicture()
+            
+        })
+        let takeCameraAction = UIAlertAction(title: "写真を撮る", style: .default, handler: {
+            (action: UIAlertAction!)in
+            
+        })
+        
+        // 3
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel)
+        
+        // 4
+        optionMenu.addAction(cameraRollAction)
+        optionMenu.addAction(takeCameraAction)
+        optionMenu.addAction(cancelAction)
+        
+        // 5
+        self.present(optionMenu, animated: true, completion: nil)
+        
     }
-    */
+
 
     @IBAction func addPhoto(_ sender: Any) {
-        print("押されたよ")
-
+//
         var ref: DocumentReference? = nil
 
         let title: String = titleEditText.text!
@@ -68,18 +93,41 @@ class AddViewController: UIViewController,UIImagePickerControllerDelegate,UINavi
             } else {
                 print("Document added with ID: \(ref!.documentID)")
             }
-        }
 
+        }
+        
+        // STORAGEにアップロードする
+        //        let storageRef = storage.reference()
+        //
+        //        let picRef = storageRef.child("images/\(ref!.documentID)")
+        //
+        //        let uploadTask = picRef.putFile(from: imageUrl, metadata: nil) { metadata, error in
+        //            guard let metadata = metadata else {
+        //                // Uh-oh, an error occurred!
+        //                return
+        //            }
+        //            // Metadata contains file metadata such as size, content-type.
+        //            let size = metadata.size
+        //            // You can also access to download URL after upload.
+        //            storageRef.downloadURL { (url, error) in
+        //                guard url != nil else {
+        //                    // Uh-oh, an error occurred!
+        //                    return
+        //                }
+        //            }
+        //        }
+        
         self.dismiss(animated: true, completion: nil)
 
     }
-    
+
     // カメラロールから写真を選択する処理
-    @IBAction func choosePicture() {
+    func choosePicture() {
         // カメラロールが利用可能か？
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             // 写真を選ぶビュー
             let pickerView = UIImagePickerController()
+
             // 写真の選択元をカメラロールにする
             // 「.camera」にすればカメラを起動できる
             pickerView.sourceType = .photoLibrary
@@ -87,44 +135,33 @@ class AddViewController: UIViewController,UIImagePickerControllerDelegate,UINavi
             pickerView.delegate = self
             // ビューに表示
             self.present(pickerView, animated: true)
+
         }
     }
-    
-    @IBAction func photo(_ sender: Any) {
-        
-        // 1
-        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
-        
-        // 2
-        let cameraRollAction = UIAlertAction(title: "カメラロールから選択", style: .default)
-        let takeCameraAction = UIAlertAction(title: "写真を撮る", style: .default)
-        
-        // 3
-        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel)
-        
-        // 4
-        optionMenu.addAction(cameraRollAction)
-        optionMenu.addAction(takeCameraAction)
-        optionMenu.addAction(cancelAction)
-        
-        // 5
-        self.present(optionMenu, animated: true, completion: nil)
-        
+
+    //写真が選択された時の処理
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+
+        //選択された画像を保存
+        if image == info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+
+            //比率を変えずに画像を表示する
+            imageView.contentMode = UIView.ContentMode.scaleAspectFit
+
+            //画像を設定
+            imageView.image = image
+            
+            // Storageにアップロードするときにパスで送ったほうがいいらしい
+//            imageUrl = info[UIImagePickerController.InfoKey.referenceURL] as? URL
+//            print(imageUrl)
+        }
+
+        //写真ライブラリを閉じる
+        dismiss(animated: true, completion: nil)
+
     }
-//    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//        // 選択した写真を取得する
-//        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-//        // ビューに表示する
-//        self.imageView.image = image
-//        // 写真を選ぶビューを引っ込める
-//        self.dismiss(animated: true)
-//    }
-    
-    // 写真をリセットする処理
-    @IBAction func resetPicture() {
-        
-    }
-    
+
+
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
