@@ -143,7 +143,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 
         //選択された画像を保存
-        if image == info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
 
             //比率を変えずに画像を表示する
             imageView.contentMode = UIView.ContentMode.scaleAspectFit
