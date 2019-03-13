@@ -9,10 +9,12 @@
 import UIKit
 
 class Ramen {
+    var url: String
     var title: String
     var detail: String
 
-    init(tiele: String, detail: String) {
+    init(url: String, tiele: String, detail: String) {
+        self.url = url
         self.title = tiele
         self.detail = detail
     }

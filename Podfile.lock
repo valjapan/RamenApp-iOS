@@ -95,6 +95,7 @@ PODS:
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.17.0)
   - GTMSessionFetcher/Core (1.2.1)
+  - Kingfisher (5.1.0)
   - leveldb-library (1.20)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -108,6 +109,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Firestore
   - Firebase/Storage
+  - Kingfisher
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -126,6 +128,7 @@ SPEC REPOS:
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
+    - Kingfisher
     - leveldb-library
     - nanopb
     - Protobuf
@@ -146,10 +149,11 @@ SPEC CHECKSUMS:
   "gRPC-C++": e76441995900ac90e9bd98644ab4733f12521edf
   gRPC-Core: 4028031ed2c5267cca0d846c876d8046b1ecb9b6
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
+  Kingfisher: fcec238063d17404fca89bf0a850583211c4cbf6
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
 
-PODFILE CHECKSUM: 6b6d71eb9d2ee2ba79b9931cda058d6e50819d71
+PODFILE CHECKSUM: b9d512620b56b16730632a4c200856ae52c79297
 
 COCOAPODS: 1.6.1

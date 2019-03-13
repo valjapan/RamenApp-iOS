@@ -10,6 +10,7 @@ target 'RamenApp' do
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
   pod 'Crashlytics'
+  pod 'Kingfisher'
 
   target 'RamenAppTests' do
     inherit! :search_paths

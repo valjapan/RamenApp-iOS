@@ -12,6 +12,7 @@ class ListTableViewCell: UITableViewCell {
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!
+    @IBOutlet var ramenImageView: UIImageView!
     
     
     override func awakeFromNib() {

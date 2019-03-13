@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Kingfisher
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -16,6 +17,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var cellCount: Int!
 
     var cell: UITableViewCell!
+
+    var urlString: String!
 
     @IBOutlet var table: UITableView!
 
@@ -47,6 +50,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.titleLabel.text = nowIndexPathDictionary.title
         cell.detailLabel.text = nowIndexPathDictionary.detail
 
+
+        urlString = nowIndexPathDictionary.url
+
+        let url = URL(string: urlString)
+
+        cell.ramenImageView.kf.indicatorType = .activity
+        cell.ramenImageView.kf.setImage(with: url) {
+        }
+
+
         return cell
 
     }
@@ -66,8 +79,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     //                        self.cellCount += 1
                     print("\(document.documentID) => \(document.data())");
 
-                    self.ramenArray.append(Ramen.init(tiele: document.data()["title"] as! String, detail: document.data()["detail"] as! String))
-
+                    self.ramenArray.append(Ramen.init(url: document.data()["downloadURL"]as! String, tiele: document.data()["title"] as! String, detail: document.data()["detail"] as! String))
 
                 }
                 //                    print("Count = \(String(self.cellCount))");

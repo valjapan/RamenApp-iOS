@@ -12,10 +12,12 @@ import Firebase
 class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var db: Firestore!
     var storage: Storage!
-    var image: UIImage!
+    var uploadImage: UIImage!
     var imageUrl: URL!
+    var passID: String!
+    var downloadUrl: URL!
 
-//    var storageRef: StorageReference!
+    var storageRef: StorageReference!
 
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var titleEditText: UITextField!
@@ -33,10 +35,9 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         // [END setup]
         db = Firestore.firestore()
 
-//        storage = Storage.storage()
+        storage = Storage.storage()
 
 
-//       storageRef = Storage.storage().reference()
         // Do any additional setup after loading the view.
     }
 
@@ -45,79 +46,73 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         //Cancel
         return true
     }
-    
-    
+
+
     @IBAction func photo(_ sender: Any) {
-        
+
         // 1
         let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
-        
+
         // 2
         let cameraRollAction = UIAlertAction(title: "カメラロールから選択", style: .default, handler: {
             (action: UIAlertAction!)in
             self.choosePicture()
-            
+
         })
         let takeCameraAction = UIAlertAction(title: "写真を撮る", style: .default, handler: {
             (action: UIAlertAction!)in
-            
+
         })
-        
+
         // 3
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel)
-        
+
         // 4
         optionMenu.addAction(cameraRollAction)
         optionMenu.addAction(takeCameraAction)
         optionMenu.addAction(cancelAction)
-        
+
         // 5
         self.present(optionMenu, animated: true, completion: nil)
-        
+
     }
 
 
     @IBAction func addPhoto(_ sender: Any) {
-//
-        var ref: DocumentReference? = nil
 
         let title: String = titleEditText.text!
         let detail: String = detailEditText.text!
 
-        ref = db.collection("collection").addDocument(data: [
-            "title": title,
-            "detail": detail
-            ]) { err in
-            if let err = err {
-                print("Error adding document: \(err)")
-            } else {
-                print("Document added with ID: \(ref!.documentID)")
-            }
+//        let localFile = imageUrl
+        let picRef = storage.reference(forURL: "gs://ramenoishii-e6deb.appspot.com").child("images")
+        let data = uploadImage.pngData()!
 
-        }
-        
-        // STORAGEにアップロードする
-        //        let storageRef = storage.reference()
-        //
-        //        let picRef = storageRef.child("images/\(ref!.documentID)")
-        //
-        //        let uploadTask = picRef.putFile(from: imageUrl, metadata: nil) { metadata, error in
-        //            guard let metadata = metadata else {
-        //                // Uh-oh, an error occurred!
-        //                return
-        //            }
-        //            // Metadata contains file metadata such as size, content-type.
-        //            let size = metadata.size
-        //            // You can also access to download URL after upload.
-        //            storageRef.downloadURL { (url, error) in
-        //                guard url != nil else {
-        //                    // Uh-oh, an error occurred!
-        //                    return
-        //                }
-        //            }
-        //        }
-        
-        self.dismiss(animated: true, completion: nil)
+        let documentRef = db.collection("collection").document()
+
+
+        picRef.child("\(documentRef.documentID).png").putData(data, metadata: nil, completion: { [weak self] metadata, error in
+            guard let self = self else { return }
+
+            picRef.child("\(documentRef.documentID).png").downloadURL(completion: { url, error in
+                self.downloadUrl = url
+                print(url)
+                print("nabe error: \(error)")
+                documentRef.setData([
+                    "downloadURL": url?.absoluteString ?? "",
+                    "title": title,
+                    "detail": detail
+                    ]) { err in
+                    if let err = err {
+                        print("Error adding document: \(err)")
+                    } else {
+                        print("Document added with ID: \(documentRef.documentID)")
+                        self.dismiss(animated: true, completion: nil)
+                    }
+
+                }
+            })
+
+        })
 
     }
 
@@ -150,9 +145,11 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
 
             //画像を設定
             imageView.image = image
-            
-            // Storageにアップロードするときにパスで送ったほうがいいらしい
-//            imageUrl = info[UIImagePickerController.InfoKey.referenceURL] as? URL
+
+            uploadImage = image
+
+            //  Storageにアップロードするときにパスで送ったほうがいいらしい
+//            imageUrl = info[UIImagePickerController.InfoKey.imageURL] as! URL
 //            print(imageUrl)
         }
 
