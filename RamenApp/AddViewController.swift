@@ -16,9 +16,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     var imageUrl: URL!
     var passID: String!
     var downloadUrl: URL!
-
     var storageRef: StorageReference!
-
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var titleEditText: UITextField!
     @IBOutlet var detailEditText: UITextView!

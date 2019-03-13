@@ -22,6 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let db = Firestore.firestore()
         let strage = Storage.storage()
+        
+        return true
+    }
+    
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        DeployGateSDK.sharedInstance().launchApplication(withAuthor: "yukiyuki961", key: "3d05c27646d476b01e3a8aa4701cacabd8a188d7")
+        
         return true
     }
 
@@ -46,7 +53,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 

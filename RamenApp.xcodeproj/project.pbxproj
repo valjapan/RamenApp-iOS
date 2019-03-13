@@ -15,6 +15,16 @@
 		0BC86CAF222ACACD00E9DB26 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC86CAE222ACACD00E9DB26 /* CameraViewController.swift */; };
 		0BC86CB1222D059600E9DB26 /* Ramen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC86CB0222D059600E9DB26 /* Ramen.swift */; };
 		0BC86CB6222D16DD00E9DB26 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC86CB4222D16DD00E9DB26 /* ListTableViewCell.swift */; };
+		0BED6EA92238F4FF00932BCC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BED6EA82238F4FF00932BCC /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		0BED6EB82238F7CF00932BCC /* ACKNOWLEDGEMENTS.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0BED6EAE2238F7CF00932BCC /* ACKNOWLEDGEMENTS.txt */; };
+		0BED6EB92238F7CF00932BCC /* DeployGateSDK.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0BED6EB02238F7CF00932BCC /* DeployGateSDK.strings */; };
+		0BED6EBA2238F7CF00932BCC /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0BED6EB32238F7CF00932BCC /* Info.plist */; };
+		0BED6EBB2238F7CF00932BCC /* CHANGELOG.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0BED6EB42238F7CF00932BCC /* CHANGELOG.txt */; };
+		0BED6EBC2238F7CF00932BCC /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0BED6EB52238F7CF00932BCC /* README.txt */; };
+		0BED6EBD2238F7CF00932BCC /* DeployGateSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BED6EB62238F7CF00932BCC /* DeployGateSDK.framework */; };
+		0BED6EBE2238F7CF00932BCC /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0BED6EB72238F7CF00932BCC /* LICENSE.txt */; };
+		0BED6EC02238FC0F00932BCC /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BED6EBF2238FC0F00932BCC /* DetailViewController.swift */; };
+		0BED6EC22239221500932BCC /* icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0BED6EC12239221500932BCC /* icon.jpg */; };
 		0BF917362223E67000731152 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF917352223E67000731152 /* AppDelegate.swift */; };
 		0BF917382223E67000731152 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF917372223E67000731152 /* ViewController.swift */; };
 		0BF9173B2223E67000731152 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BF917392223E67000731152 /* Main.storyboard */; };
@@ -25,7 +35,7 @@
 		0BF917642223EBEC00731152 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0BF917632223EBEC00731152 /* GoogleService-Info.plist */; };
 		814F404317C4EC246FF97390 /* Pods_RamenAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 050A7934666C8FBC75472F15 /* Pods_RamenAppTests.framework */; };
 		C304C61A72E977BC9D81D466 /* Pods_RamenAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCB2C80475180E01B88EF76B /* Pods_RamenAppUITests.framework */; };
-		C61A53C0FC2D202193E0A3C3 /* Pods_RamenApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E472D8EF37D156139E53E621 /* Pods_RamenApp.framework */; };
+		C61A53C0FC2D202193E0A3C3 /* Pods_RamenApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E472D8EF37D156139E53E621 /* Pods_RamenApp.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +66,18 @@
 		0BC86CAE222ACACD00E9DB26 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		0BC86CB0222D059600E9DB26 /* Ramen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ramen.swift; sourceTree = "<group>"; };
 		0BC86CB4222D16DD00E9DB26 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
+		0BED6EA82238F4FF00932BCC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		0BED6EAA2238F5F400932BCC /* RamenApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RamenApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		0BED6EAE2238F7CF00932BCC /* ACKNOWLEDGEMENTS.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACKNOWLEDGEMENTS.txt; sourceTree = "<group>"; };
+		0BED6EB12238F7CF00932BCC /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/DeployGateSDK.strings; sourceTree = "<group>"; };
+		0BED6EB22238F7CF00932BCC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DeployGateSDK.strings; sourceTree = "<group>"; };
+		0BED6EB32238F7CF00932BCC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Info.plist; sourceTree = "<group>"; };
+		0BED6EB42238F7CF00932BCC /* CHANGELOG.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.txt; sourceTree = "<group>"; };
+		0BED6EB52238F7CF00932BCC /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		0BED6EB62238F7CF00932BCC /* DeployGateSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DeployGateSDK.framework; sourceTree = "<group>"; };
+		0BED6EB72238F7CF00932BCC /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		0BED6EBF2238FC0F00932BCC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		0BED6EC12239221500932BCC /* icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = icon.jpg; path = ../../../../Desktop/icon.jpg; sourceTree = "<group>"; };
 		0BF917322223E67000731152 /* RamenApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RamenApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BF917352223E67000731152 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BF917372223E67000731152 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -84,7 +106,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BED6EA92238F4FF00932BCC /* SystemConfiguration.framework in Frameworks */,
 				C61A53C0FC2D202193E0A3C3 /* Pods_RamenApp.framework in Frameworks */,
+				0BED6EBD2238F7CF00932BCC /* DeployGateSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,12 +147,36 @@
 		0BC86CA2222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt.imageset */ = {
 			isa = PBXGroup;
 			children = (
+				0BED6EC12239221500932BCC /* icon.jpg */,
 				0BC86CA3222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_1x.png */,
 				0BC86CA4222A47BA00E9DB26 /* Contents.json */,
 				0BC86CA6222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_2x.png */,
 				0BC86CA5222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_3x.png */,
 			);
 			path = baseline_camera_enhance_black_48pt.imageset;
+			sourceTree = "<group>";
+		};
+		0BED6EAD2238F7CF00932BCC /* DeployGateSDK1.0.7.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				0BED6EAE2238F7CF00932BCC /* ACKNOWLEDGEMENTS.txt */,
+				0BED6EAF2238F7CF00932BCC /* Resources */,
+				0BED6EB42238F7CF00932BCC /* CHANGELOG.txt */,
+				0BED6EB52238F7CF00932BCC /* README.txt */,
+				0BED6EB62238F7CF00932BCC /* DeployGateSDK.framework */,
+				0BED6EB72238F7CF00932BCC /* LICENSE.txt */,
+			);
+			name = DeployGateSDK1.0.7.embeddedframework;
+			path = ../../Downloads/DeployGateSDK1.0.7.embeddedframework;
+			sourceTree = "<group>";
+		};
+		0BED6EAF2238F7CF00932BCC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0BED6EB02238F7CF00932BCC /* DeployGateSDK.strings */,
+				0BED6EB32238F7CF00932BCC /* Info.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		0BF917292223E67000731152 = {
@@ -168,6 +216,8 @@
 				0BC86CAE222ACACD00E9DB26 /* CameraViewController.swift */,
 				0BC86CB0222D059600E9DB26 /* Ramen.swift */,
 				0BC86CB4222D16DD00E9DB26 /* ListTableViewCell.swift */,
+				0BED6EAA2238F5F400932BCC /* RamenApp-Bridging-Header.h */,
+				0BED6EBF2238FC0F00932BCC /* DetailViewController.swift */,
 			);
 			path = RamenApp;
 			sourceTree = "<group>";
@@ -193,8 +243,10 @@
 		86D29EADF0E74D595759C1D2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0BED6EA82238F4FF00932BCC /* SystemConfiguration.framework */,
 				E472D8EF37D156139E53E621 /* Pods_RamenApp.framework */,
 				050A7934666C8FBC75472F15 /* Pods_RamenAppTests.framework */,
+				0BED6EAD2238F7CF00932BCC /* DeployGateSDK1.0.7.embeddedframework */,
 				BCB2C80475180E01B88EF76B /* Pods_RamenAppUITests.framework */,
 			);
 			name = Frameworks;
@@ -212,6 +264,7 @@
 				0BF9172F2223E67000731152 /* Frameworks */,
 				0BF917302223E67000731152 /* Resources */,
 				C7597B9D5A07A060B541586A /* [CP] Embed Pods Frameworks */,
+				0F40561A51E7C9666DAA7336 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -272,6 +325,7 @@
 				TargetAttributes = {
 					0BF917312223E67000731152 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 					0BF917452223E67100731152 = {
 						CreatedOnToolsVersion = 10.1;
@@ -290,6 +344,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = 0BF917292223E67000731152;
 			productRefGroup = 0BF917332223E67000731152 /* Products */;
@@ -309,13 +364,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				0BF917402223E67100731152 /* LaunchScreen.storyboard in Resources */,
+				0BED6EC22239221500932BCC /* icon.jpg in Resources */,
 				0BC86CA7222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_1x.png in Resources */,
 				0BC86CA9222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_3x.png in Resources */,
+				0BED6EBC2238F7CF00932BCC /* README.txt in Resources */,
+				0BED6EB92238F7CF00932BCC /* DeployGateSDK.strings in Resources */,
 				0BF917642223EBEC00731152 /* GoogleService-Info.plist in Resources */,
+				0BED6EBE2238F7CF00932BCC /* LICENSE.txt in Resources */,
 				0BC86CAA222A47BA00E9DB26 /* baseline_camera_enhance_black_48pt_2x.png in Resources */,
 				0BF9173D2223E67100731152 /* Assets.xcassets in Resources */,
+				0BED6EBB2238F7CF00932BCC /* CHANGELOG.txt in Resources */,
 				0BF9173B2223E67000731152 /* Main.storyboard in Resources */,
+				0BED6EBA2238F7CF00932BCC /* Info.plist in Resources */,
 				0BC86CA8222A47BA00E9DB26 /* Contents.json in Resources */,
+				0BED6EB82238F7CF00932BCC /* ACKNOWLEDGEMENTS.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +398,30 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0F40561A51E7C9666DAA7336 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RamenApp/Pods-RamenApp-resources.sh",
+				"${PODS_ROOT}/DeployGateSDK/DeployGateSDK1.0.7.embeddedframework/DeployGateSDK.framework/Versions/A/Resources/en.lproj",
+				"${PODS_ROOT}/DeployGateSDK/DeployGateSDK1.0.7.embeddedframework/DeployGateSDK.framework/Versions/A/Resources/ja.lproj",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/en.lproj",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ja.lproj",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RamenApp/Pods-RamenApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9F5BD3E76B46C931E2EEEE39 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -449,6 +535,7 @@
 			files = (
 				0BC86CB1222D059600E9DB26 /* Ramen.swift in Sources */,
 				0BF917382223E67000731152 /* ViewController.swift in Sources */,
+				0BED6EC02238FC0F00932BCC /* DetailViewController.swift in Sources */,
 				0BC86CAF222ACACD00E9DB26 /* CameraViewController.swift in Sources */,
 				0BF917362223E67000731152 /* AppDelegate.swift in Sources */,
 				0BC86CAD222A48FD00E9DB26 /* AddViewController.swift in Sources */,
@@ -488,6 +575,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		0BED6EB02238F7CF00932BCC /* DeployGateSDK.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0BED6EB12238F7CF00932BCC /* ja */,
+				0BED6EB22238F7CF00932BCC /* en */,
+			);
+			name = DeployGateSDK.strings;
+			sourceTree = "<group>";
+		};
 		0BF917392223E67000731152 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -628,8 +724,13 @@
 			baseConfigurationReference = BE9692B3EA38CF205CF00FEC /* Pods-RamenApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 36464NVWV7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = RamenApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -637,6 +738,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.valjapan.RamenApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RamenApp/RamenApp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -647,8 +750,13 @@
 			baseConfigurationReference = 048FE471D474FA4EE4D99117 /* Pods-RamenApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 36464NVWV7;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = RamenApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -656,6 +764,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.valjapan.RamenApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RamenApp/RamenApp-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

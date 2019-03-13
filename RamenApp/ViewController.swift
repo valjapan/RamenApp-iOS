@@ -13,30 +13,20 @@ import Kingfisher
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var db: Firestore!
-
     var cellCount: Int!
-
     var cell: UITableViewCell!
-
     var urlString: String!
-
-    @IBOutlet var table: UITableView!
-
+    var chosenCell: Int!
     var ramenArray: [Ramen] = []
+    @IBOutlet var table: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         table.dataSource = self
-
         let settings = FirestoreSettings()
-
         Firestore.firestore().settings = settings
-
         db = Firestore.firestore()
-
         getCollection()
-
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -46,22 +36,35 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ListTableViewCell
         let nowIndexPathDictionary = ramenArray[indexPath.row]
-
         cell.titleLabel.text = nowIndexPathDictionary.title
         cell.detailLabel.text = nowIndexPathDictionary.detail
-
-
         urlString = nowIndexPathDictionary.url
-
         let url = URL(string: urlString)
-
         cell.ramenImageView.kf.indicatorType = .activity
-        cell.ramenImageView.kf.setImage(with: url) {
-        }
-
-
+        cell.ramenImageView.kf.setImage(with: url)
         return cell
+    }
 
+    // セルが選択された時に呼ばれる
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // 選択されたcellの番号を記憶
+        chosenCell = indexPath.row
+        // 画面遷移の準備
+        performSegue(withIdentifier: "toSubViewController", sender: nil)
+        print(chosenCell)
+    }
+
+    // Segue 準備
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
+        if segue.identifier == "toSubViewController" {
+            // 遷移先のViecControllerのインスタンスを生成
+            let secVC: DetailViewController = (segue.destination as? DetailViewController)!
+            // secondViewControllerのgetCellに選択された画像を設定する
+            let nowIndexPathDictionary = ramenArray[chosenCell]
+            secVC.titleString = nowIndexPathDictionary.title
+            secVC.detailString = nowIndexPathDictionary.detail
+            secVC.myUrl = nowIndexPathDictionary.url
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -73,25 +76,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             (querySnapshot, err) in
 
             if let err = err {
-                print("Error getting documents: \(err)");
+                print("Error getting documents: \(err)")
             } else {
+                self.ramenArray = []
                 for document in querySnapshot!.documents {
-                    //                        self.cellCount += 1
-                    print("\(document.documentID) => \(document.data())");
-
+                    print("\(document.documentID) => \(document.data())")
                     self.ramenArray.append(Ramen.init(url: document.data()["downloadURL"]as! String, tiele: document.data()["title"] as! String, detail: document.data()["detail"] as! String))
-
                 }
-                //                    print("Count = \(String(self.cellCount))");
             }
-
             DispatchQueue.main.async {
                 self.table.reloadData()
             }
-
         }
-
     }
-
 }
 
