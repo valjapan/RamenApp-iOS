@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    var db: Firestore!
+    var firestore: Firestore!
     var storage: Storage!
     var uploadImage: UIImage!
     var imageUrl: URL!
@@ -20,23 +20,13 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var titleEditText: UITextField!
     @IBOutlet var detailEditText: UITextView!
-    @IBOutlet var add: UIBarButtonItem!
-    @IBOutlet var cancel: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // [START setup]
         let settings = FirestoreSettings()
-
         Firestore.firestore().settings = settings
-        // [END setup]
-        db = Firestore.firestore()
-
+        firestore = Firestore.firestore()
         storage = Storage.storage()
-
-
-        // Do any additional setup after loading the view.
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -45,56 +35,44 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         return true
     }
 
-
     @IBAction func photo(_ sender: Any) {
-
-        // 1
         let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
-
-        // 2
         let cameraRollAction = UIAlertAction(title: "カメラロールから選択", style: .default, handler: {
             (action: UIAlertAction!)in
             self.choosePicture()
-
         })
         let takeCameraAction = UIAlertAction(title: "写真を撮る", style: .default, handler: {
             (action: UIAlertAction!)in
-
         })
-
-        // 3
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel)
-
-        // 4
         optionMenu.addAction(cameraRollAction)
         optionMenu.addAction(takeCameraAction)
         optionMenu.addAction(cancelAction)
-
-        // 5
         self.present(optionMenu, animated: true, completion: nil)
-
     }
 
 
-    @IBAction func addPhoto(_ sender: Any) {
-
+    @IBAction func addContents() {
         let title: String = titleEditText.text!
         let detail: String = detailEditText.text!
-
-//        let localFile = imageUrl
         let picRef = storage.reference(forURL: "gs://ramenoishii-e6deb.appspot.com").child("images")
+        if uploadImage == nil {
+            let alert = UIAlertController(title: "画像の選択", message: "アップロードするための画像を選択してください", preferredStyle: UIAlertController.Style.alert)
+            let okayButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
+            alert.addAction(okayButton)
+            
+            alert.popoverPresentationController?.sourceView = self.view
+            
+            present(alert, animated: true, completion: nil)
+            return
+        }
         let data = uploadImage.pngData()!
-
-        let documentRef = db.collection("collection").document()
-
+        let documentRef = firestore.collection("collection").document()
 
         picRef.child("\(documentRef.documentID).png").putData(data, metadata: nil, completion: { [weak self] metadata, error in
             guard let self = self else { return }
-
             picRef.child("\(documentRef.documentID).png").downloadURL(completion: { url, error in
                 self.downloadUrl = url
-                print(url)
-                print("nabe error: \(error)")
                 documentRef.setData([
                     "downloadURL": url?.absoluteString ?? "",
                     "title": title,
@@ -106,12 +84,9 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
                         print("Document added with ID: \(documentRef.documentID)")
                         self.dismiss(animated: true, completion: nil)
                     }
-
                 }
             })
-
         })
-
     }
 
     // カメラロールから写真を選択する処理
@@ -128,7 +103,6 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
             pickerView.delegate = self
             // ビューに表示
             self.present(pickerView, animated: true)
-
         }
     }
 
@@ -145,17 +119,10 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
             imageView.image = image
 
             uploadImage = image
-
-            //  Storageにアップロードするときにパスで送ったほうがいいらしい
-//            imageUrl = info[UIImagePickerController.InfoKey.imageURL] as! URL
-//            print(imageUrl)
         }
-
         //写真ライブラリを閉じる
         dismiss(animated: true, completion: nil)
-
     }
-
 
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)

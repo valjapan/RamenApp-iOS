@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        DeployGateSDK.sharedInstance().launchApplication(withAuthor: "yukiyuki961", key: "3d05c27646d476b01e3a8aa4701cacabd8a188d7")
+        DeployGateSDK.sharedInstance().launchApplication(withAuthor: "yukiyuki961", key: "150e6ba9739077dcfbb825308f039db22091f2d2")
         
         return true
     }

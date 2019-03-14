@@ -12,11 +12,11 @@ import Kingfisher
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var db: Firestore!
+    var firestore: Firestore!
     var cellCount: Int!
     var cell: UITableViewCell!
     var urlString: String!
-    var chosenCell: Int!
+    var chosenCount: Int!
     var ramenArray: [Ramen] = []
     @IBOutlet var table: UITableView!
 
@@ -25,7 +25,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         table.dataSource = self
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
-        db = Firestore.firestore()
+        firestore = Firestore.firestore()
         getCollection()
     }
 
@@ -48,10 +48,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // セルが選択された時に呼ばれる
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 選択されたcellの番号を記憶
-        chosenCell = indexPath.row
+        chosenCount = indexPath.row
         // 画面遷移の準備
         performSegue(withIdentifier: "toSubViewController", sender: nil)
-        print(chosenCell)
+        print(chosenCount)
     }
 
     // Segue 準備
@@ -60,10 +60,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             // 遷移先のViecControllerのインスタンスを生成
             let secVC: DetailViewController = (segue.destination as? DetailViewController)!
             // secondViewControllerのgetCellに選択された画像を設定する
-            let nowIndexPathDictionary = ramenArray[chosenCell]
+            let nowIndexPathDictionary = ramenArray[chosenCount]
             secVC.titleString = nowIndexPathDictionary.title
             secVC.detailString = nowIndexPathDictionary.detail
-            secVC.myUrl = nowIndexPathDictionary.url
+            secVC.urlPassString = nowIndexPathDictionary.url
         }
     }
 
@@ -72,7 +72,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     private func getCollection() {
-        db.collection("collection").getDocuments() {
+        firestore.collection("collection").getDocuments() {
             (querySnapshot, err) in
 
             if let err = err {
