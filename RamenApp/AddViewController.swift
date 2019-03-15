@@ -17,6 +17,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     var passID: String!
     var downloadUrl: URL!
     var storageRef: StorageReference!
+    var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var titleEditText: UITextField!
     @IBOutlet var detailEditText: UITextView!
@@ -27,6 +28,14 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         Firestore.firestore().settings = settings
         firestore = Firestore.firestore()
         storage = Storage.storage()
+
+        let width = self.view.frame.width
+        let height = self.view.frame.height
+        activityIndicatorView = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        activityIndicatorView.center = CGPoint(x: width / 2, y: height / 2)
+        activityIndicatorView.hidesWhenStopped = true
+        activityIndicatorView.backgroundColor = UIColor.lightGray
+        self.view.addSubview(activityIndicatorView)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -37,12 +46,20 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
 
     @IBAction func photo(_ sender: Any) {
         let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .actionSheet)
+
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            optionMenu.popoverPresentationController?.sourceView = self.view
+            let screenSize = UIScreen.main.bounds
+            optionMenu.popoverPresentationController?.sourceRect = CGRect(x: screenSize.size.width / 2, y: screenSize.size.height, width: 0, height: 0)
+        }
+
         let cameraRollAction = UIAlertAction(title: "カメラロールから選択", style: .default, handler: {
             (action: UIAlertAction!)in
             self.choosePicture()
         })
         let takeCameraAction = UIAlertAction(title: "写真を撮る", style: .default, handler: {
             (action: UIAlertAction!)in
+            self.takePictures()
         })
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel)
         optionMenu.addAction(cameraRollAction)
@@ -51,6 +68,13 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         self.present(optionMenu, animated: true, completion: nil)
     }
 
+    func takePictures() {
+        let alert = UIAlertController(title: "写真を撮る", message: "今後の実装に期待してください", preferredStyle: UIAlertController.Style.alert)
+        let okayButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
+        alert.addAction(okayButton)
+        alert.popoverPresentationController?.sourceView = self.view
+        present(alert, animated: true, completion: nil)
+    }
 
     @IBAction func addContents() {
         let title: String = titleEditText.text!
@@ -60,15 +84,16 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
             let alert = UIAlertController(title: "画像の選択", message: "アップロードするための画像を選択してください", preferredStyle: UIAlertController.Style.alert)
             let okayButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
             alert.addAction(okayButton)
-            
+
             alert.popoverPresentationController?.sourceView = self.view
-            
+
             present(alert, animated: true, completion: nil)
             return
         }
         let data = uploadImage.pngData()!
         let documentRef = firestore.collection("collection").document()
 
+        activityIndicatorView.startAnimating()
         picRef.child("\(documentRef.documentID).png").putData(data, metadata: nil, completion: { [weak self] metadata, error in
             guard let self = self else { return }
             picRef.child("\(documentRef.documentID).png").downloadURL(completion: { url, error in
@@ -82,6 +107,7 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
                         print("Error adding document: \(err)")
                     } else {
                         print("Document added with ID: \(documentRef.documentID)")
+                        self.activityIndicatorView.stopAnimating()
                         self.dismiss(animated: true, completion: nil)
                     }
                 }
@@ -122,6 +148,10 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         }
         //写真ライブラリを閉じる
         dismiss(animated: true, completion: nil)
+    }
+
+    @IBAction func tapScreen(sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
 
     @IBAction func cancel(_ sender: Any) {
