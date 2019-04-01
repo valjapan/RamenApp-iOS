@@ -16,6 +16,8 @@
 
 #import <Foundation/Foundation.h>
 
+#include "Firestore/core/src/firebase/firestore/local/index_manager.h"
+#include "Firestore/core/src/firebase/firestore/local/mutation_queue.h"
 #include "Firestore/core/src/firebase/firestore/local/remote_document_cache.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key_set.h"
@@ -23,7 +25,6 @@
 
 @class FSTMaybeDocument;
 @class FSTQuery;
-@protocol FSTMutationQueue;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -34,9 +35,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface FSTLocalDocumentsView : NSObject
 
-+ (instancetype)viewWithRemoteDocumentCache:
-                    (firebase::firestore::local::RemoteDocumentCache *)remoteDocumentCache
-                              mutationQueue:(id<FSTMutationQueue>)mutationQueue;
++ (instancetype)
+    viewWithRemoteDocumentCache:
+        (firebase::firestore::local::RemoteDocumentCache *)remoteDocumentCache
+                  mutationQueue:(firebase::firestore::local::MutationQueue *)mutationQueue
+                   indexManager:(firebase::firestore::local::IndexManager *)indexManager;
 
 - (instancetype)init __attribute__((unavailable("Use a static constructor")));
 

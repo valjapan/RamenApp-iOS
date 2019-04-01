@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="k9r-MW-7Mc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="k9r-MW-7Mc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -86,7 +86,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="ラーメン一覧" id="Yvr-6T-DYK">
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="5fw-UE-WaA">
+                        <barButtonItem key="rightBarButtonItem" title="投稿" id="5fw-UE-WaA">
                             <connections>
                                 <segue destination="HbA-3a-Ot5" kind="modal" id="zST-SV-YDk"/>
                             </connections>
@@ -101,7 +101,7 @@
             </objects>
             <point key="canvasLocation" x="671.20000000000005" y="147.97601199400302"/>
         </scene>
-        <!--追加画面-->
+        <!--推しのラーメン-->
         <scene sceneID="f9H-ri-Lum">
             <objects>
                 <viewController id="WhM-7o-wWc" customClass="AddViewController" customModule="RamenApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -119,8 +119,8 @@
                                     <constraint firstAttribute="width" secondItem="Jmv-16-9bG" secondAttribute="height" multiplier="1:1" id="jgC-Co-n3i"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="ラーメン名:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6I-zc-PGO">
-                                <rect key="frame" x="1" y="314" width="87" height="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ラーメン名:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6I-zc-PGO">
+                                <rect key="frame" x="1" y="319" width="87" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -142,8 +142,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="説明 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qCu-JR-iJL">
-                                <rect key="frame" x="44" y="372" width="44" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="説明 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qCu-JR-iJL">
+                                <rect key="frame" x="44" y="379" width="44" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -159,6 +159,7 @@
                             <constraint firstItem="Jmv-16-9bG" firstAttribute="leading" secondItem="8GX-Il-HKw" secondAttribute="leadingMargin" constant="72" id="AtM-gT-04e"/>
                             <constraint firstItem="QbJ-qS-CTx" firstAttribute="leading" secondItem="qCu-JR-iJL" secondAttribute="trailing" id="Feu-wP-yhg"/>
                             <constraint firstItem="NfV-CJ-PlT" firstAttribute="top" secondItem="Jmv-16-9bG" secondAttribute="bottom" constant="40" id="NDT-7K-u7r"/>
+                            <constraint firstItem="i6I-zc-PGO" firstAttribute="top" secondItem="Jmv-16-9bG" secondAttribute="bottom" constant="48" id="RcD-DF-FRF"/>
                             <constraint firstItem="NfV-CJ-PlT" firstAttribute="leading" secondItem="i6I-zc-PGO" secondAttribute="trailing" id="WoL-lX-aXY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QbJ-qS-CTx" secondAttribute="trailing" constant="24" id="YEd-oW-vB0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Jmv-16-9bG" secondAttribute="trailing" constant="72" id="hUB-7k-1E4"/>
@@ -166,7 +167,7 @@
                             <constraint firstItem="qCu-JR-iJL" firstAttribute="top" secondItem="i6I-zc-PGO" secondAttribute="bottom" constant="40" id="mB2-M0-Vvg"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="追加画面" id="Uja-c9-AZq">
+                    <navigationItem key="navigationItem" title="推しのラーメン" id="Uja-c9-AZq">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="j8D-Re-XUB">
                             <connections>
                                 <action selector="cancel:" destination="WhM-7o-wWc" id="Zpb-AG-Iih"/>

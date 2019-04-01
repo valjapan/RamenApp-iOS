@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate ,UITextFieldDelegate{
     var firestore: Firestore!
     var storage: Storage!
     var uploadImage: UIImage!
@@ -19,7 +19,11 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
     var storageRef: StorageReference!
     var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet var imageView: UIImageView!
-    @IBOutlet var titleEditText: UITextField!
+    @IBOutlet var titleEditText: UITextField!{
+        didSet{
+            titleEditText.delegate = self 
+        }
+    }
     @IBOutlet var detailEditText: UITextView!
 
     override func viewDidLoad() {
@@ -37,10 +41,60 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
         activityIndicatorView.backgroundColor = UIColor.lightGray
         self.view.addSubview(activityIndicatorView)
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        self.configureObserver()
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        super.viewWillDisappear(animated)
+        self.removeObserver() // Notificationを画面が消えるときに削除
+    }
+    
+    // Notificationを設定
+    func configureObserver() {
+        
+        let notification = NotificationCenter.default
+        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    // Notificationを削除
+    func removeObserver() {
+        
+        let notification = NotificationCenter.default
+        notification.removeObserver(self)
+    }
+    
+    // キーボードが現れた時に、画面全体をずらす。
+    @objc func keyboardWillShow(notification: Notification?) {
+        
+        let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+        UIView.animate(withDuration: duration!, animations: { () in
+            let transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
+            self.view.transform = transform
+            
+        })
+    }
+    
+    // キーボードが消えたときに、画面を戻す
+    @objc func keyboardWillHide(notification: Notification?) {
+        
+        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
+        UIView.animate(withDuration: duration!, animations: { () in
+            
+            self.view.transform = CGAffineTransform.identity
+        })
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        //Cancel
+        
+        textField.resignFirstResponder() // Returnキーを押したときにキーボードを下げる
         return true
     }
 
@@ -57,24 +111,24 @@ class AddViewController: UIViewController, UIImagePickerControllerDelegate, UINa
             (action: UIAlertAction!)in
             self.choosePicture()
         })
-        let takeCameraAction = UIAlertAction(title: "写真を撮る", style: .default, handler: {
-            (action: UIAlertAction!)in
-            self.takePictures()
-        })
+//        let takeCameraAction = UIAlertAction(title: "写真を撮る", style: .default, handler: {
+//            (action: UIAlertAction!)in
+//            self.takePictures()
+//        })
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel)
         optionMenu.addAction(cameraRollAction)
-        optionMenu.addAction(takeCameraAction)
+//        optionMenu.addAction(takeCameraAction)
         optionMenu.addAction(cancelAction)
         self.present(optionMenu, animated: true, completion: nil)
     }
 
-    func takePictures() {
-        let alert = UIAlertController(title: "写真を撮る", message: "今後の実装に期待してください", preferredStyle: UIAlertController.Style.alert)
-        let okayButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
-        alert.addAction(okayButton)
-        alert.popoverPresentationController?.sourceView = self.view
-        present(alert, animated: true, completion: nil)
-    }
+//    func takePictures() {
+//        let alert = UIAlertController(title: "写真を撮る", message: "今後の実装に期待してください", preferredStyle: UIAlertController.Style.alert)
+//        let okayButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
+//        alert.addAction(okayButton)
+//        alert.popoverPresentationController?.sourceView = self.view
+//        present(alert, animated: true, completion: nil)
+//    }
 
     @IBAction func addContents() {
         let title: String = titleEditText.text!

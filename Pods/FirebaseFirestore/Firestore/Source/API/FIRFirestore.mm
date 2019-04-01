@@ -30,16 +30,19 @@
 #import "Firestore/Source/API/FIRCollectionReference+Internal.h"
 #import "Firestore/Source/API/FIRDocumentReference+Internal.h"
 #import "Firestore/Source/API/FIRFirestore+Internal.h"
+#import "Firestore/Source/API/FIRQuery+Internal.h"
 #import "Firestore/Source/API/FIRTransaction+Internal.h"
 #import "Firestore/Source/API/FIRWriteBatch+Internal.h"
 #import "Firestore/Source/API/FSTFirestoreComponent.h"
 #import "Firestore/Source/API/FSTUserDataConverter.h"
 #import "Firestore/Source/Core/FSTFirestoreClient.h"
+#import "Firestore/Source/Core/FSTQuery.h"
 #import "Firestore/Source/Util/FSTUsageValidation.h"
 
 #include "Firestore/core/src/firebase/firestore/auth/credentials_provider.h"
 #include "Firestore/core/src/firebase/firestore/auth/firebase_credentials_provider_apple.h"
 #include "Firestore/core/src/firebase/firestore/core/database_info.h"
+#include "Firestore/core/src/firebase/firestore/core/transaction.h"
 #include "Firestore/core/src/firebase/firestore/model/database_id.h"
 #include "Firestore/core/src/firebase/firestore/model/resource_path.h"
 #include "Firestore/core/src/firebase/firestore/util/async_queue.h"
@@ -53,6 +56,7 @@ namespace util = firebase::firestore::util;
 using firebase::firestore::auth::CredentialsProvider;
 using firebase::firestore::auth::FirebaseCredentialsProvider;
 using firebase::firestore::core::DatabaseInfo;
+using firebase::firestore::core::Transaction;
 using firebase::firestore::model::DatabaseId;
 using firebase::firestore::model::ResourcePath;
 using util::AsyncQueue;
@@ -270,12 +274,27 @@ extern "C" NSString *const FIRFirestoreErrorDomain = @"FIRFirestoreErrorDomain";
   return [FIRDocumentReference referenceWithPath:path firestore:self];
 }
 
+- (FIRQuery *)collectionGroupWithID:(NSString *)collectionID {
+  if (!collectionID) {
+    FSTThrowInvalidArgument(@"Collection ID cannot be nil.");
+  }
+  if ([collectionID containsString:@"/"]) {
+    FSTThrowInvalidArgument(
+        @"Invalid collection ID (%@). Collection IDs must not contain / in them.", collectionID);
+  }
+
+  [self ensureClientConfigured];
+  return [FIRQuery referenceWithQuery:[FSTQuery queryWithPath:ResourcePath::Empty()
+                                              collectionGroup:collectionID]
+                            firestore:self];
+}
+
 - (void)runTransactionWithBlock:(id _Nullable (^)(FIRTransaction *, NSError **))updateBlock
                   dispatchQueue:(dispatch_queue_t)queue
                      completion:
                          (void (^)(id _Nullable result, NSError *_Nullable error))completion {
   // We wrap the function they provide in order to use internal implementation classes for
-  // FSTTransaction, and to run the user callback block on the proper queue.
+  // transaction, and to run the user callback block on the proper queue.
   if (!updateBlock) {
     FSTThrowInvalidArgument(@"Transaction block cannot be nil.");
   } else if (!completion) {
@@ -283,10 +302,11 @@ extern "C" NSString *const FIRFirestoreErrorDomain = @"FIRFirestoreErrorDomain";
   }
 
   FSTTransactionBlock wrappedUpdate =
-      ^(FSTTransaction *internalTransaction,
+      ^(std::shared_ptr<Transaction> internalTransaction,
         void (^internalCompletion)(id _Nullable, NSError *_Nullable)) {
         FIRTransaction *transaction =
-            [FIRTransaction transactionWithFSTTransaction:internalTransaction firestore:self];
+            [FIRTransaction transactionWithInternalTransaction:std::move(internalTransaction)
+                                                     firestore:self];
         dispatch_async(queue, ^{
           NSError *_Nullable error = nil;
           id _Nullable result = updateBlock(transaction, &error);

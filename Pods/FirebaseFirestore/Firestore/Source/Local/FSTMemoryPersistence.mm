@@ -21,29 +21,34 @@
 #include <unordered_set>
 #include <vector>
 
-#import "Firestore/Source/Core/FSTListenSequence.h"
-#import "Firestore/Source/Local/FSTMemoryMutationQueue.h"
-#include "absl/memory/memory.h"
-
 #include "Firestore/core/src/firebase/firestore/auth/user.h"
+#include "Firestore/core/src/firebase/firestore/local/index_manager.h"
+#include "Firestore/core/src/firebase/firestore/local/listen_sequence.h"
+#include "Firestore/core/src/firebase/firestore/local/memory_index_manager.h"
+#include "Firestore/core/src/firebase/firestore/local/memory_mutation_queue.h"
 #include "Firestore/core/src/firebase/firestore/local/memory_query_cache.h"
 #include "Firestore/core/src/firebase/firestore/local/memory_remote_document_cache.h"
 #include "Firestore/core/src/firebase/firestore/local/reference_set.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
+#include "absl/memory/memory.h"
 
 using firebase::firestore::auth::HashUser;
 using firebase::firestore::auth::User;
+using firebase::firestore::local::ListenSequence;
 using firebase::firestore::local::LruParams;
+using firebase::firestore::local::MemoryIndexManager;
+using firebase::firestore::local::MemoryMutationQueue;
 using firebase::firestore::local::MemoryQueryCache;
 using firebase::firestore::local::MemoryRemoteDocumentCache;
 using firebase::firestore::local::ReferenceSet;
 using firebase::firestore::model::DocumentKey;
 using firebase::firestore::model::DocumentKeyHash;
 using firebase::firestore::model::ListenSequenceNumber;
+using firebase::firestore::model::TargetId;
 using firebase::firestore::util::Status;
 
-using MutationQueues = std::unordered_map<User, FSTMemoryMutationQueue *, HashUser>;
+using MutationQueues = std::unordered_map<User, std::unique_ptr<MemoryMutationQueue>, HashUser>;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -52,6 +57,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (MemoryQueryCache *)queryCache;
 
 - (MemoryRemoteDocumentCache *)remoteDocumentCache;
+
+- (MemoryIndexManager *)indexManager;
+
+- (MemoryMutationQueue *)mutationQueueForUser:(const User &)user;
 
 @property(nonatomic, readonly) MutationQueues &mutationQueues;
 
@@ -74,7 +83,9 @@ NS_ASSUME_NONNULL_BEGIN
   std::unique_ptr<MemoryQueryCache> _queryCache;
 
   /** The RemoteDocumentCache representing the persisted cache of remote documents. */
-  MemoryRemoteDocumentCache _remoteDocumentCache;
+  std::unique_ptr<MemoryRemoteDocumentCache> _remoteDocumentCache;
+
+  MemoryIndexManager _indexManager;
 
   FSTTransactionRunner _transactionRunner;
 
@@ -101,6 +112,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init {
   if (self = [super init]) {
     _queryCache = absl::make_unique<MemoryQueryCache>(self);
+    _remoteDocumentCache = absl::make_unique<MemoryRemoteDocumentCache>(self);
     self.started = YES;
   }
   return self;
@@ -132,13 +144,14 @@ NS_ASSUME_NONNULL_BEGIN
   return _transactionRunner;
 }
 
-- (id<FSTMutationQueue>)mutationQueueForUser:(const User &)user {
-  id<FSTMutationQueue> queue = _mutationQueues[user];
-  if (!queue) {
-    queue = [[FSTMemoryMutationQueue alloc] initWithPersistence:self];
-    _mutationQueues[user] = queue;
+- (MemoryMutationQueue *)mutationQueueForUser:(const User &)user {
+  const std::unique_ptr<MemoryMutationQueue> &existing = _mutationQueues[user];
+  if (!existing) {
+    _mutationQueues[user] = absl::make_unique<MemoryMutationQueue>(self);
+    return _mutationQueues[user].get();
+  } else {
+    return existing.get();
   }
-  return queue;
 }
 
 - (MemoryQueryCache *)queryCache {
@@ -146,7 +159,11 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (MemoryRemoteDocumentCache *)remoteDocumentCache {
-  return &_remoteDocumentCache;
+  return _remoteDocumentCache.get();
+}
+
+- (MemoryIndexManager *)indexManager {
+  return &_indexManager;
 }
 
 @end
@@ -160,7 +177,8 @@ NS_ASSUME_NONNULL_BEGIN
   std::unordered_map<DocumentKey, ListenSequenceNumber, DocumentKeyHash> _sequenceNumbers;
   ReferenceSet *_additionalReferences;
   FSTLRUGarbageCollector *_gc;
-  FSTListenSequence *_listenSequence;
+  // PORTING NOTE: when this class is ported to C++, this does not need to be a pointer
+  std::unique_ptr<ListenSequence> _listenSequence;
   ListenSequenceNumber _currentSequenceNumber;
   FSTLocalSerializer *_serializer;
 }
@@ -175,7 +193,7 @@ NS_ASSUME_NONNULL_BEGIN
     // Theoretically this is always 0, since this is all in-memory...
     ListenSequenceNumber highestSequenceNumber =
         _persistence.queryCache->highest_listen_sequence_number();
-    _listenSequence = [[FSTListenSequence alloc] initStartingAfter:highestSequenceNumber];
+    _listenSequence = absl::make_unique<ListenSequence>(highestSequenceNumber);
     _serializer = serializer;
   }
   return self;
@@ -209,7 +227,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)startTransaction:(absl::string_view)label {
-  _currentSequenceNumber = [_listenSequence next];
+  _currentSequenceNumber = _listenSequence->Next();
 }
 
 - (void)commitTransaction {
@@ -235,7 +253,8 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (int)removeTargetsThroughSequenceNumber:(ListenSequenceNumber)sequenceNumber
-                              liveQueries:(NSDictionary<NSNumber *, FSTQueryData *> *)liveQueries {
+                              liveQueries:(const std::unordered_map<TargetId, FSTQueryData *> &)
+                                              liveQueries {
   return _persistence.queryCache->RemoveTargets(sequenceNumber, liveQueries);
 }
 
@@ -268,7 +287,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)mutationQueuesContainKey:(const DocumentKey &)key {
   const MutationQueues &queues = [_persistence mutationQueues];
   for (const auto &entry : queues) {
-    if ([entry.second containsKey:key]) {
+    if (entry.second->ContainsKey(key)) {
       return YES;
     }
   }
@@ -306,7 +325,7 @@ NS_ASSUME_NONNULL_BEGIN
   count += _persistence.remoteDocumentCache->CalculateByteSize(_serializer);
   const MutationQueues &queues = [_persistence mutationQueues];
   for (const auto &entry : queues) {
-    count += [entry.second byteSizeWithSerializer:_serializer];
+    count += entry.second->CalculateByteSize(_serializer);
   }
   return count;
 }
@@ -385,7 +404,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)mutationQueuesContainKey:(const DocumentKey &)key {
   const MutationQueues &queues = [_persistence mutationQueues];
   for (const auto &entry : queues) {
-    if ([entry.second containsKey:key]) {
+    if (entry.second->ContainsKey(key)) {
       return YES;
     }
   }
